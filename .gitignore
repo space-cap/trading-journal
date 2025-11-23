@@ -1,0 +1,151 @@
+# ============================================
+# OS
+# ============================================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ============================================
+# IDE
+# ============================================
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# ============================================
+# Backend (Spring Boot + Kotlin + Gradle)
+# ============================================
+backend/build/
+backend/.gradle/
+backend/bin/
+backend/out/
+backend/.idea/
+backend/*.iml
+backend/*.iws
+backend/*.ipr
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Maven
+target/
+
+# Spring Boot
+*.log
+*.log.*
+spring.log
+
+# Sensitive configuration files
+backend/src/main/resources/application-prod.properties
+backend/src/main/resources/application-local.properties
+backend/src/main/resources/application-*.properties
+!backend/src/main/resources/application.properties
+!backend/src/main/resources/application-dev.properties
+!backend/src/main/resources/application-prod.properties.template
+
+# H2 Database files
+*.db
+*.mv.db
+*.trace.db
+
+# ============================================
+# Frontend (React + Vite + TypeScript)
+# ============================================
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+frontend/.cache/
+
+# Node.js
+node_modules/
+dist/
+build/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Test coverage
+coverage/
+*.lcov
+.nyc_output/
+
+# ============================================
+# Database
+# ============================================
+# Database backup files
+database/backups/
+*.sql.backup
+*.dump
+
+# Database credentials
+database/.env
+database/config.local.*
+
+# ============================================
+# Documentation
+# ============================================
+# Temporary documentation files
+docs/.temp/
+docs/*.tmp
+
+# ============================================
+# Artifacts & Build outputs
+# ============================================
+*.jar
+*.war
+*.ear
+*.class
+*.pyc
+*.pyo
+
+# ============================================
+# Temporary files
+# ============================================
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ============================================
+# Logs
+# ============================================
+logs/
+*.log
+*.log.*
+
+# ============================================
+# System files
+# ============================================
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
