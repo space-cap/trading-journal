@@ -4,8 +4,8 @@
 
 **매매 일지를 기록하고 분석하는 웹 애플리케이션**
 
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.0-brightgreen.svg)](https://spring.io/projects/spring-boot)
-[![Kotlin](https://img.shields.io/badge/Kotlin-1.9.20-blue.svg)](https://kotlinlang.org/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.8-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.9.25-blue.svg)](https://kotlinlang.org/)
 [![React](https://img.shields.io/badge/React-19.2.0-61dafb.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6.svg)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-7.2.4-646cff.svg)](https://vitejs.dev/)
@@ -64,8 +64,8 @@ Trading Journal은 투자자들이 자신의 매매 기록을 체계적으로 �
 ### Backend
 | 기술 | 버전 | 설명 |
 |------|------|------|
-| **Spring Boot** | 3.2.0 | Java 기반 웹 애플리케이션 프레임워크 |
-| **Kotlin** | 1.9.20 | JVM 기반 현대적인 프로그래밍 언어 |
+| **Spring Boot** | 3.5.8 | Java 기반 웹 애플리케이션 프레임워크 |
+| **Kotlin** | 1.9.25 | JVM 기반 현대적인 프로그래밍 언어 |
 | **Spring Data JPA** | - | 데이터베이스 접근 계층 추상화 |
 | **H2 Database** | - | 인메모리 데이터베이스 (개발용) |
 | **Gradle** | - | 빌드 자동화 도구 |
