@@ -53,6 +53,22 @@
             "edit": "수정",
             "delete": "삭제",
             "confirmDelete": "정말 삭제하시겠습니까?"
+        },
+        "filters": {
+            "all": "전체",
+            "today": "오늘",
+            "thisWeek": "이번주",
+            "thisMonth": "이번달",
+            "customRange": "기간 선택",
+            "startDate": "시작일",
+            "endDate": "종료일"
+        },
+        "stats": {
+            "total": "총 {{count}}건",
+            "profit": "수익 {{count}}건",
+            "loss": "손실 {{count}}건",
+            "totalPnl": "총 손익",
+            "winRate": "승률"
         }
     },
     "closeModal": {
