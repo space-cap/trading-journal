@@ -45,11 +45,11 @@ export const TradeForm: React.FC<Props> = ({ onTradeCreated }) => {
     return (
         <form onSubmit={handleSubmit} className="p-4 bg-white shadow rounded mb-4">
             <h2 className="text-xl font-bold mb-4">{t('tradeForm.title')}</h2>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input
                     type="text"
                     placeholder={t('tradeForm.symbolPlaceholder')}
-                    className="border p-2 rounded"
+                    className="border p-3 md:p-2 rounded text-base md:text-sm w-full"
                     value={formData.symbol}
                     onChange={e => setFormData({ ...formData, symbol: e.target.value })}
                     required
@@ -57,7 +57,7 @@ export const TradeForm: React.FC<Props> = ({ onTradeCreated }) => {
                 <input
                     type="number"
                     placeholder={t('tradeForm.entryPricePlaceholder')}
-                    className="border p-2 rounded"
+                    className="border p-3 md:p-2 rounded text-base md:text-sm w-full"
                     value={formData.entryPrice}
                     onChange={e => setFormData({ ...formData, entryPrice: e.target.value })}
                     required
@@ -65,7 +65,7 @@ export const TradeForm: React.FC<Props> = ({ onTradeCreated }) => {
                 <input
                     type="number"
                     placeholder={t('tradeForm.quantityPlaceholder')}
-                    className="border p-2 rounded"
+                    className="border p-3 md:p-2 rounded text-base md:text-sm w-full"
                     value={formData.quantity}
                     onChange={e => setFormData({ ...formData, quantity: e.target.value })}
                     required
@@ -73,20 +73,23 @@ export const TradeForm: React.FC<Props> = ({ onTradeCreated }) => {
                 <input
                     type="number"
                     placeholder={t('tradeForm.feePlaceholder')}
-                    className="border p-2 rounded"
+                    className="border p-3 md:p-2 rounded text-base md:text-sm w-full"
                     value={formData.fee}
                     onChange={e => setFormData({ ...formData, fee: e.target.value })}
                 />
                 <input
                     type="text"
                     placeholder={t('tradeForm.reasonPlaceholder')}
-                    className="border p-2 rounded col-span-2"
+                    className="border p-3 md:p-2 rounded text-base md:text-sm w-full md:col-span-2"
                     value={formData.reason}
                     onChange={e => setFormData({ ...formData, reason: e.target.value })}
                     required
                 />
             </div>
-            <button type="submit" className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            <button
+                type="submit"
+                className="mt-4 w-full md:w-auto bg-blue-500 text-white px-6 py-3 md:py-2 rounded hover:bg-blue-600 font-medium text-base md:text-sm transition-colors"
+            >
                 {t('tradeForm.submitButton')}
             </button>
         </form>

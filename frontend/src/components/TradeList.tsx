@@ -151,42 +151,42 @@ export const TradeList: React.FC<Props> = ({ trades, onRefresh }) => {
             <div className="mb-4 flex flex-wrap gap-2 items-center">
                 <button
                     onClick={() => setDateFilter('all')}
-                    className={`px-3 py-1 rounded text-sm ${dateFilter === 'all'
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    className={`px-3 py-2 md:py-1 rounded text-sm ${dateFilter === 'all'
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                         }`}
                 >
                     {t('tradeList.filters.all')}
                 </button>
                 <button
                     onClick={() => setDateFilter('today')}
-                    className={`px-3 py-1 rounded text-sm ${dateFilter === 'today'
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    className={`px-3 py-2 md:py-1 rounded text-sm ${dateFilter === 'today'
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                         }`}
                 >
                     {t('tradeList.filters.today')}
                 </button>
                 <button
                     onClick={() => setDateFilter('week')}
-                    className={`px-3 py-1 rounded text-sm ${dateFilter === 'week'
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    className={`px-3 py-2 md:py-1 rounded text-sm ${dateFilter === 'week'
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                         }`}
                 >
                     {t('tradeList.filters.thisWeek')}
                 </button>
                 <button
                     onClick={() => setDateFilter('month')}
-                    className={`px-3 py-1 rounded text-sm ${dateFilter === 'month'
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    className={`px-3 py-2 md:py-1 rounded text-sm ${dateFilter === 'month'
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                         }`}
                 >
                     {t('tradeList.filters.thisMonth')}
                 </button>
 
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-2 items-center w-full md:w-auto mt-2 md:mt-0">
                     <input
                         type="date"
                         value={customDateRange.start}
@@ -194,7 +194,7 @@ export const TradeList: React.FC<Props> = ({ trades, onRefresh }) => {
                             setCustomDateRange({ ...customDateRange, start: e.target.value });
                             setDateFilter('custom');
                         }}
-                        className="px-2 py-1 border rounded text-sm"
+                        className="flex-1 md:flex-none px-2 py-2 md:py-1 border rounded text-sm"
                         placeholder={t('tradeList.filters.startDate')}
                     />
                     <span className="text-gray-500">~</span>
@@ -205,7 +205,7 @@ export const TradeList: React.FC<Props> = ({ trades, onRefresh }) => {
                             setCustomDateRange({ ...customDateRange, end: e.target.value });
                             setDateFilter('custom');
                         }}
-                        className="px-2 py-1 border rounded text-sm"
+                        className="flex-1 md:flex-none px-2 py-2 md:py-1 border rounded text-sm"
                         placeholder={t('tradeList.filters.endDate')}
                     />
                 </div>
@@ -230,7 +230,71 @@ export const TradeList: React.FC<Props> = ({ trades, onRefresh }) => {
                 </span>
             </div>
 
-            <div className="overflow-x-auto">
+            {/* 모바일 카드 뷰 (lg 미만에서 표시) */}
+            <div className="lg:hidden space-y-3">
+                {processedTrades.map(trade => (
+                    <div key={trade.id} className="bg-white border rounded-lg p-4 shadow-sm">
+                        <div className="flex justify-between items-start mb-2">
+                            <div>
+                                <h3 className="font-bold text-lg">{trade.symbol}</h3>
+                                <div className="text-sm text-gray-500">
+                                    {trade.entryDate && formatRelativeTime(trade.entryDate, t)}
+                                    {trade.entryDate && ` (${formatDateTime(trade.entryDate)})`}
+                                </div>
+                            </div>
+                            <div className={`text-lg font-bold ${trade.realizedPnl && trade.realizedPnl > 0 ? 'text-green-600' : trade.realizedPnl && trade.realizedPnl < 0 ? 'text-red-600' : 'text-gray-600'}`}>
+                                {trade.realizedPnl ? trade.realizedPnl.toFixed(2) : '-'}
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-2 text-sm mb-3 text-gray-700">
+                            <div>
+                                <span className="text-gray-500 mr-1">{t('tradeList.columns.entryPrice')}:</span>
+                                {trade.entryPrice}
+                            </div>
+                            <div>
+                                <span className="text-gray-500 mr-1">{t('tradeList.columns.quantity')}:</span>
+                                {trade.quantity}
+                            </div>
+                            <div className="col-span-2">
+                                <span className="text-gray-500 mr-1">{t('tradeList.columns.reason')}:</span>
+                                {trade.reason}
+                            </div>
+                        </div>
+
+                        <div className="flex gap-2 mt-3">
+                            {!trade.exitPrice && (
+                                <button
+                                    onClick={() => setCloseModalTrade(trade)}
+                                    className="flex-1 py-2 border-2 border-emerald-600 text-emerald-600 text-sm rounded font-medium hover:bg-emerald-600 hover:text-white transition-all"
+                                >
+                                    {t('tradeList.actions.close')}
+                                </button>
+                            )}
+                            <button
+                                onClick={() => setEditModalTrade(trade)}
+                                className="flex-1 py-2 border-2 border-slate-600 text-slate-600 text-sm rounded font-medium hover:bg-slate-600 hover:text-white transition-all"
+                            >
+                                {t('tradeList.actions.edit')}
+                            </button>
+                            <button
+                                onClick={() => handleDelete(trade.id!)}
+                                className="flex-1 py-2 border-2 border-rose-600 text-rose-600 text-sm rounded font-medium hover:bg-rose-600 hover:text-white transition-all"
+                            >
+                                {t('tradeList.actions.delete')}
+                            </button>
+                        </div>
+                    </div>
+                ))}
+                {processedTrades.length === 0 && (
+                    <div className="text-center py-8 text-gray-500">
+                        {t('tradeList.noTrades')}
+                    </div>
+                )}
+            </div>
+
+            {/* 데스크톱 테이블 뷰 (lg 이상에서 표시) */}
+            <div className="hidden lg:block overflow-x-auto">
                 <table className="w-full text-left">
                     <thead>
                         <tr className="border-b">

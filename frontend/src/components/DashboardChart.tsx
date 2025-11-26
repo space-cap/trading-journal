@@ -28,7 +28,7 @@ export const DashboardChart: React.FC<Props> = ({ trades }) => {
     return (
         <div className="mb-4">
             {/* 통계 카드 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4">
                 <StatsCard
                     title={t('dashboard.totalPnl')}
                     value={stats.totalPnl}
