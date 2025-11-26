@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import type { Trade } from '../types/Trade';
 
@@ -7,6 +8,7 @@ interface Props {
 }
 
 export const DashboardChart: React.FC<Props> = ({ trades }) => {
+    const { t } = useTranslation();
     const data = trades.map((t, index) => ({
         name: `Trade ${index + 1}`,
         pnl: t.realizedPnl || 0,
@@ -21,7 +23,7 @@ export const DashboardChart: React.FC<Props> = ({ trades }) => {
 
     return (
         <div className="bg-white shadow rounded p-4 mb-4 h-96">
-            <h2 className="text-xl font-bold mb-4">Performance Chart</h2>
+            <h2 className="text-xl font-bold mb-4">{t('chart.title')}</h2>
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={data}>
                     <CartesianGrid strokeDasharray="3 3" />

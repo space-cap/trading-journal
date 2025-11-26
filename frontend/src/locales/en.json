@@ -1,0 +1,81 @@
+{
+    "app": {
+        "title": "Trading Journal"
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "trades": "Trades",
+        "settings": "Settings"
+    },
+    "chart": {
+        "title": "Performance Chart",
+        "cumulativePnl": "Cumulative P&L"
+    },
+    "tradeForm": {
+        "title": "New Trade Record",
+        "symbol": "Symbol",
+        "symbolPlaceholder": "e.g., AAPL, 005930",
+        "entryPrice": "Entry Price",
+        "entryPricePlaceholder": "Enter entry price",
+        "quantity": "Quantity",
+        "quantityPlaceholder": "Enter quantity",
+        "fee": "Fee",
+        "feePlaceholder": "Transaction fee",
+        "reason": "Reason",
+        "reasonPlaceholder": "Enter trade reason",
+        "exitPrice": "Exit Price",
+        "exitPricePlaceholder": "Exit price (optional)",
+        "submitButton": "Add Trade",
+        "successMessage": "Trade added successfully!",
+        "errorMessage": "Failed to add trade"
+    },
+    "tradeList": {
+        "title": "Trade History",
+        "noTrades": "No trades found.",
+        "columns": {
+            "symbol": "Symbol",
+            "entryPrice": "Entry",
+            "exitPrice": "Exit",
+            "quantity": "Qty",
+            "fee": "Fee",
+            "pnl": "P&L",
+            "entryDate": "Entry Date",
+            "exitDate": "Exit Date",
+            "reason": "Reason",
+            "actions": "Actions"
+        },
+        "status": {
+            "open": "Open",
+            "closed": "Closed"
+        },
+        "actions": {
+            "close": "Close",
+            "edit": "Edit",
+            "delete": "Delete",
+            "confirmDelete": "Are you sure you want to delete?"
+        }
+    },
+    "closeModal": {
+        "title": "Close Trade",
+        "exitPrice": "Exit Price",
+        "exitDate": "Exit Date",
+        "submit": "Close",
+        "cancel": "Cancel"
+    },
+    "editModal": {
+        "title": "Edit Trade",
+        "submit": "Save",
+        "cancel": "Cancel"
+    },
+    "common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "delete": "Delete",
+        "edit": "Edit",
+        "close": "Close",
+        "loading": "Loading...",
+        "error": "Error",
+        "success": "Success"
+    }
+}

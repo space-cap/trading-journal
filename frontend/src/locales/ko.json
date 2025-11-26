@@ -1,0 +1,81 @@
+{
+    "app": {
+        "title": "매매 일지"
+    },
+    "nav": {
+        "dashboard": "대시보드",
+        "trades": "매매 내역",
+        "settings": "설정"
+    },
+    "chart": {
+        "title": "수익 차트",
+        "cumulativePnl": "누적 손익"
+    },
+    "tradeForm": {
+        "title": "새 매매 기록",
+        "symbol": "종목 코드",
+        "symbolPlaceholder": "예: AAPL, 005930",
+        "entryPrice": "진입 가격",
+        "entryPricePlaceholder": "매수 가격 입력",
+        "quantity": "수량",
+        "quantityPlaceholder": "매수 수량",
+        "fee": "수수료",
+        "feePlaceholder": "거래 수수료",
+        "reason": "매매 근거",
+        "reasonPlaceholder": "매매 이유를 입력하세요",
+        "exitPrice": "청산 가격",
+        "exitPricePlaceholder": "매도 가격 (선택)",
+        "submitButton": "매매 기록 추가",
+        "successMessage": "매매 기록이 추가되었습니다!",
+        "errorMessage": "매매 기록 추가 실패"
+    },
+    "tradeList": {
+        "title": "매매 내역",
+        "noTrades": "매매 기록이 없습니다.",
+        "columns": {
+            "symbol": "종목",
+            "entryPrice": "진입가",
+            "exitPrice": "청산가",
+            "quantity": "수량",
+            "fee": "수수료",
+            "pnl": "손익",
+            "entryDate": "진입일",
+            "exitDate": "청산일",
+            "reason": "매매 근거",
+            "actions": "작업"
+        },
+        "status": {
+            "open": "진행 중",
+            "closed": "청산 완료"
+        },
+        "actions": {
+            "close": "청산",
+            "edit": "수정",
+            "delete": "삭제",
+            "confirmDelete": "정말 삭제하시겠습니까?"
+        }
+    },
+    "closeModal": {
+        "title": "매매 청산",
+        "exitPrice": "매도가",
+        "exitDate": "매도일",
+        "submit": "청산",
+        "cancel": "취소"
+    },
+    "editModal": {
+        "title": "매매 수정",
+        "submit": "저장",
+        "cancel": "취소"
+    },
+    "common": {
+        "save": "저장",
+        "cancel": "취소",
+        "confirm": "확인",
+        "delete": "삭제",
+        "edit": "수정",
+        "close": "닫기",
+        "loading": "로딩 중...",
+        "error": "오류 발생",
+        "success": "성공"
+    }
+}

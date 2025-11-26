@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Trade } from '../types/Trade';
 
 interface Props {
@@ -6,6 +7,7 @@ interface Props {
 }
 
 export const TradeForm: React.FC<Props> = ({ onTradeCreated }) => {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         symbol: '',
         entryPrice: '',
@@ -42,11 +44,11 @@ export const TradeForm: React.FC<Props> = ({ onTradeCreated }) => {
 
     return (
         <form onSubmit={handleSubmit} className="p-4 bg-white shadow rounded mb-4">
-            <h2 className="text-xl font-bold mb-4">Add New Trade</h2>
+            <h2 className="text-xl font-bold mb-4">{t('tradeForm.title')}</h2>
             <div className="grid grid-cols-2 gap-4">
                 <input
                     type="text"
-                    placeholder="Symbol"
+                    placeholder={t('tradeForm.symbolPlaceholder')}
                     className="border p-2 rounded"
                     value={formData.symbol}
                     onChange={e => setFormData({ ...formData, symbol: e.target.value })}
@@ -54,7 +56,7 @@ export const TradeForm: React.FC<Props> = ({ onTradeCreated }) => {
                 />
                 <input
                     type="number"
-                    placeholder="Entry Price"
+                    placeholder={t('tradeForm.entryPricePlaceholder')}
                     className="border p-2 rounded"
                     value={formData.entryPrice}
                     onChange={e => setFormData({ ...formData, entryPrice: e.target.value })}
@@ -62,7 +64,7 @@ export const TradeForm: React.FC<Props> = ({ onTradeCreated }) => {
                 />
                 <input
                     type="number"
-                    placeholder="Quantity"
+                    placeholder={t('tradeForm.quantityPlaceholder')}
                     className="border p-2 rounded"
                     value={formData.quantity}
                     onChange={e => setFormData({ ...formData, quantity: e.target.value })}
@@ -70,14 +72,14 @@ export const TradeForm: React.FC<Props> = ({ onTradeCreated }) => {
                 />
                 <input
                     type="number"
-                    placeholder="Fee"
+                    placeholder={t('tradeForm.feePlaceholder')}
                     className="border p-2 rounded"
                     value={formData.fee}
                     onChange={e => setFormData({ ...formData, fee: e.target.value })}
                 />
                 <input
                     type="text"
-                    placeholder="Reason"
+                    placeholder={t('tradeForm.reasonPlaceholder')}
                     className="border p-2 rounded col-span-2"
                     value={formData.reason}
                     onChange={e => setFormData({ ...formData, reason: e.target.value })}
@@ -85,7 +87,7 @@ export const TradeForm: React.FC<Props> = ({ onTradeCreated }) => {
                 />
             </div>
             <button type="submit" className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                Add Trade
+                {t('tradeForm.submitButton')}
             </button>
         </form>
     );
