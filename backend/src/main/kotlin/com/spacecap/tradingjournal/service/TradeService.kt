@@ -5,13 +5,15 @@ import com.spacecap.tradingjournal.repository.TradeRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
+import java.time.LocalDateTime
+
 @Service
 @Transactional
 class TradeService(
     private val tradeRepository: TradeRepository
 ) {
     @Transactional(readOnly = true)
-    fun getAllTrades(): List<Trade> = tradeRepository.findAll()
+    fun getAllTrades(): List<Trade> = tradeRepository.findByDeletedAtIsNull()
 
     @Transactional(readOnly = true)
     fun getTradeById(id: Long): Trade {
@@ -29,6 +31,9 @@ class TradeService(
     }
 
     fun deleteTrade(id: Long) {
-        tradeRepository.deleteById(id)
+        val trade = tradeRepository.findById(id)
+            .orElseThrow { IllegalArgumentException("Trade not found with id: $id") }
+        trade.deletedAt = LocalDateTime.now()
+        tradeRepository.save(trade)
     }
 }

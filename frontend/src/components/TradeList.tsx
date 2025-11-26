@@ -65,20 +65,20 @@ export const TradeList: React.FC<Props> = ({ trades, onRefresh }) => {
                                         {!trade.exitPrice && (
                                             <button
                                                 onClick={() => setCloseModalTrade(trade)}
-                                                className="px-3 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600"
+                                                className="px-3 py-1 border-2 border-emerald-600 text-emerald-600 text-sm rounded hover:bg-emerald-600 hover:text-white transition-all"
                                             >
                                                 {t('tradeList.actions.close')}
                                             </button>
                                         )}
                                         <button
                                             onClick={() => setEditModalTrade(trade)}
-                                            className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600"
+                                            className="px-3 py-1 border-2 border-slate-600 text-slate-600 text-sm rounded hover:bg-slate-600 hover:text-white transition-all"
                                         >
                                             {t('tradeList.actions.edit')}
                                         </button>
                                         <button
                                             onClick={() => handleDelete(trade.id!)}
-                                            className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600"
+                                            className="px-3 py-1 border-2 border-rose-600 text-rose-600 text-sm rounded hover:bg-rose-600 hover:text-white transition-all"
                                         >
                                             {t('tradeList.actions.delete')}
                                         </button>

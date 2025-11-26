@@ -30,7 +30,9 @@ data class Trade(
 
     var exitPrice: BigDecimal? = null,
 
-    var exitDate: LocalDateTime? = null
+    var exitDate: LocalDateTime? = null,
+
+    var deletedAt: LocalDateTime? = null
 ) {
     val realizedPnl: BigDecimal?
         get() {
