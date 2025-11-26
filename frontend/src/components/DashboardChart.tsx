@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import type { Trade } from '../types/Trade';
+import { StatsCard } from './charts/StatsCard';
+import { CumulativePnlChart } from './charts/CumulativePnlChart';
+import { MonthlyPnlChart } from './charts/MonthlyPnlChart';
+import { SymbolDistributionChart } from './charts/SymbolDistributionChart';
+import {
+    aggregateByMonth,
+    aggregateBySymbol,
+    getCumulativeData,
+    calculateStats,
+} from '../utils/chartUtils';
 
 interface Props {
     trades: Trade[];
@@ -9,31 +18,55 @@ interface Props {
 
 export const DashboardChart: React.FC<Props> = ({ trades }) => {
     const { t } = useTranslation();
-    const data = trades.map((t, index) => ({
-        name: `Trade ${index + 1}`,
-        pnl: t.realizedPnl || 0,
-        cumulativePnl: 0
-    }));
 
-    let cumulative = 0;
-    data.forEach(d => {
-        cumulative += d.pnl;
-        d.cumulativePnl = cumulative;
-    });
+    // 데이터 처리
+    const cumulativeData = useMemo(() => getCumulativeData(trades), [trades]);
+    const monthlyData = useMemo(() => aggregateByMonth(trades), [trades]);
+    const symbolData = useMemo(() => aggregateBySymbol(trades), [trades]);
+    const stats = useMemo(() => calculateStats(trades), [trades]);
 
     return (
-        <div className="bg-white shadow rounded p-4 mb-4 h-96">
-            <h2 className="text-xl font-bold mb-4">{t('chart.title')}</h2>
-            <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={data}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="cumulativePnl" stroke="#8884d8" activeDot={{ r: 8 }} />
-                </LineChart>
-            </ResponsiveContainer>
+        <div className="mb-4">
+            {/* 통계 카드 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                <StatsCard
+                    title={t('dashboard.totalPnl')}
+                    value={stats.totalPnl}
+                    color={stats.totalPnl >= 0 ? 'green' : 'red'}
+                    icon="💰"
+                />
+                <StatsCard
+                    title={t('dashboard.winRate')}
+                    value={`${stats.winRate}%`}
+                    color="blue"
+                    icon="📊"
+                />
+                <StatsCard
+                    title={t('dashboard.avgPnl')}
+                    value={stats.avgPnl}
+                    color={stats.avgPnl >= 0 ? 'green' : 'red'}
+                    icon="📈"
+                />
+                <StatsCard
+                    title={t('dashboard.maxProfit')}
+                    value={stats.maxProfit}
+                    color="purple"
+                    icon="🎯"
+                />
+            </div>
+
+            {/* 차트 그리드 */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+                <CumulativePnlChart data={cumulativeData} />
+                <MonthlyPnlChart data={monthlyData} />
+            </div>
+
+            {/* 종목별 분포 */}
+            {symbolData.length > 0 && (
+                <div className="grid grid-cols-1">
+                    <SymbolDistributionChart data={symbolData} />
+                </div>
+            )}
         </div>
     );
 };

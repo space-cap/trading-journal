@@ -11,6 +11,18 @@
         "title": "Performance Chart",
         "cumulativePnl": "Cumulative P&L"
     },
+    "dashboard": {
+        "totalPnl": "Total P&L",
+        "winRate": "Win Rate",
+        "avgPnl": "Avg P&L",
+        "maxProfit": "Max Profit",
+        "cumulativePnl": "Cumulative P&L Trend",
+        "monthlyPnl": "Monthly P&L",
+        "symbolDistribution": "Symbol Distribution",
+        "cumulative": "Cumulative",
+        "profit": "Profit",
+        "loss": "Loss"
+    },
     "tradeForm": {
         "title": "New Trade Record",
         "symbol": "Symbol",
