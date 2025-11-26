@@ -1,11 +1,15 @@
 package com.spacecap.tradingjournal.domain
 
 import jakarta.persistence.*
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Entity
 @Table(name = "trades")
+@EntityListeners(AuditingEntityListener::class)
 data class Trade(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
@@ -32,7 +36,14 @@ data class Trade(
 
     var exitDate: LocalDateTime? = null,
 
-    var deletedAt: LocalDateTime? = null
+    var deletedAt: LocalDateTime? = null,
+
+    @CreatedDate
+    @Column(updatable = false)
+    var createdAt: LocalDateTime? = null,
+
+    @LastModifiedDate
+    var updatedAt: LocalDateTime? = null
 ) {
     val realizedPnl: BigDecimal?
         get() {
