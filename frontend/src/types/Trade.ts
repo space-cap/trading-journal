@@ -9,4 +9,7 @@ export interface Trade {
     exitPrice?: number;
     exitDate?: string;
     realizedPnl?: number;
+    notes?: string;
+    tags?: string[];
+    imageUrls?: string[];
 }

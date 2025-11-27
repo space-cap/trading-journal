@@ -5,6 +5,7 @@ import { StatsCard } from './charts/StatsCard';
 import { CumulativePnlChart } from './charts/CumulativePnlChart';
 import { MonthlyPnlChart } from './charts/MonthlyPnlChart';
 import { SymbolDistributionChart } from './charts/SymbolDistributionChart';
+import { ProfitCalendar } from './charts/ProfitCalendar';
 import {
     aggregateByMonth,
     aggregateBySymbol,
@@ -63,10 +64,15 @@ export const DashboardChart: React.FC<Props> = ({ trades }) => {
 
             {/* 종목별 분포 */}
             {symbolData.length > 0 && (
-                <div className="grid grid-cols-1">
+                <div className="grid grid-cols-1 mb-4">
                     <SymbolDistributionChart data={symbolData} />
                 </div>
             )}
+
+            {/* 수익 캘린더 */}
+            <div className="grid grid-cols-1">
+                <ProfitCalendar trades={trades} />
+            </div>
         </div>
     );
 };

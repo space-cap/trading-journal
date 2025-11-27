@@ -88,6 +88,24 @@ export function getCumulativeData(trades: Trade[]) {
 }
 
 /**
+ * 날짜별 손익 집계 (캘린더용)
+ */
+export function aggregateByDate(trades: Trade[]): Map<string, number> {
+    const dateMap = new Map<string, number>();
+
+    trades.forEach((trade) => {
+        if (!trade.exitDate || trade.realizedPnl === null) return;
+
+        // YYYY-MM-DD 형식으로 날짜 추출
+        const dateStr = new Date(trade.exitDate).toISOString().split('T')[0];
+        const existing = dateMap.get(dateStr) || 0;
+        dateMap.set(dateStr, existing + trade.realizedPnl);
+    });
+
+    return dateMap;
+}
+
+/**
  * 통계 계산
  */
 export function calculateStats(trades: Trade[]) {

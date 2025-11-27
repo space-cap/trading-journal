@@ -43,7 +43,16 @@ data class Trade(
     var createdAt: LocalDateTime? = null,
 
     @LastModifiedDate
-    var updatedAt: LocalDateTime? = null
+    var updatedAt: LocalDateTime? = null,
+
+    @Column(columnDefinition = "TEXT")
+    var notes: String? = null,
+
+    @ElementCollection
+    var tags: MutableSet<String> = mutableSetOf(),
+
+    @ElementCollection
+    var imageUrls: MutableList<String> = mutableListOf()
 ) {
     val realizedPnl: BigDecimal?
         get() {

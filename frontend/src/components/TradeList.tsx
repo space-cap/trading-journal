@@ -3,7 +3,9 @@ import { useTranslation } from 'react-i18next';
 import type { Trade } from '../types/Trade';
 import { CloseTradeModal } from './CloseTradeModal';
 import { EditTradeModal } from './EditTradeModal';
+import { TradeDetailModal } from './TradeDetailModal';
 import { formatRelativeTime, formatDateTime } from '../utils/dateUtils';
+import { exportToExcel } from '../utils/exportUtils';
 
 interface Props {
     trades: Trade[];
@@ -18,6 +20,7 @@ export const TradeList: React.FC<Props> = ({ trades, onRefresh }) => {
     const { t } = useTranslation();
     const [closeModalTrade, setCloseModalTrade] = useState<Trade | null>(null);
     const [editModalTrade, setEditModalTrade] = useState<Trade | null>(null);
+    const [detailModalTrade, setDetailModalTrade] = useState<Trade | null>(null);
 
     // 정렬 상태
     const [sortField, setSortField] = useState<SortField>('entryDate');
@@ -148,67 +151,79 @@ export const TradeList: React.FC<Props> = ({ trades, onRefresh }) => {
             <h2 className="text-xl font-bold mb-4">{t('tradeList.title')}</h2>
 
             {/* 필터 영역 */}
-            <div className="mb-4 flex flex-wrap gap-2 items-center">
-                <button
-                    onClick={() => setDateFilter('all')}
-                    className={`px-3 py-2 md:py-1 rounded text-sm ${dateFilter === 'all'
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                        }`}
-                >
-                    {t('tradeList.filters.all')}
-                </button>
-                <button
-                    onClick={() => setDateFilter('today')}
-                    className={`px-3 py-2 md:py-1 rounded text-sm ${dateFilter === 'today'
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                        }`}
-                >
-                    {t('tradeList.filters.today')}
-                </button>
-                <button
-                    onClick={() => setDateFilter('week')}
-                    className={`px-3 py-2 md:py-1 rounded text-sm ${dateFilter === 'week'
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                        }`}
-                >
-                    {t('tradeList.filters.thisWeek')}
-                </button>
-                <button
-                    onClick={() => setDateFilter('month')}
-                    className={`px-3 py-2 md:py-1 rounded text-sm ${dateFilter === 'month'
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                        }`}
-                >
-                    {t('tradeList.filters.thisMonth')}
-                </button>
+            <div className="mb-4 flex flex-wrap gap-2 items-center justify-between">
+                <div className="flex flex-wrap gap-2 items-center">
+                    <button
+                        onClick={() => setDateFilter('all')}
+                        className={`px-3 py-2 md:py-1 rounded text-sm ${dateFilter === 'all'
+                            ? 'bg-blue-500 text-white'
+                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            }`}
+                    >
+                        {t('tradeList.filters.all')}
+                    </button>
+                    <button
+                        onClick={() => setDateFilter('today')}
+                        className={`px-3 py-2 md:py-1 rounded text-sm ${dateFilter === 'today'
+                            ? 'bg-blue-500 text-white'
+                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            }`}
+                    >
+                        {t('tradeList.filters.today')}
+                    </button>
+                    <button
+                        onClick={() => setDateFilter('week')}
+                        className={`px-3 py-2 md:py-1 rounded text-sm ${dateFilter === 'week'
+                            ? 'bg-blue-500 text-white'
+                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            }`}
+                    >
+                        {t('tradeList.filters.thisWeek')}
+                    </button>
+                    <button
+                        onClick={() => setDateFilter('month')}
+                        className={`px-3 py-2 md:py-1 rounded text-sm ${dateFilter === 'month'
+                            ? 'bg-blue-500 text-white'
+                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            }`}
+                    >
+                        {t('tradeList.filters.thisMonth')}
+                    </button>
 
-                <div className="flex gap-2 items-center w-full md:w-auto mt-2 md:mt-0">
-                    <input
-                        type="date"
-                        value={customDateRange.start}
-                        onChange={(e) => {
-                            setCustomDateRange({ ...customDateRange, start: e.target.value });
-                            setDateFilter('custom');
-                        }}
-                        className="flex-1 md:flex-none px-2 py-2 md:py-1 border rounded text-sm"
-                        placeholder={t('tradeList.filters.startDate')}
-                    />
-                    <span className="text-gray-500">~</span>
-                    <input
-                        type="date"
-                        value={customDateRange.end}
-                        onChange={(e) => {
-                            setCustomDateRange({ ...customDateRange, end: e.target.value });
-                            setDateFilter('custom');
-                        }}
-                        className="flex-1 md:flex-none px-2 py-2 md:py-1 border rounded text-sm"
-                        placeholder={t('tradeList.filters.endDate')}
-                    />
+                    <div className="flex gap-2 items-center w-full md:w-auto mt-2 md:mt-0">
+                        <input
+                            type="date"
+                            value={customDateRange.start}
+                            onChange={(e) => {
+                                setCustomDateRange({ ...customDateRange, start: e.target.value });
+                                setDateFilter('custom');
+                            }}
+                            className="flex-1 md:flex-none px-2 py-2 md:py-1 border rounded text-sm"
+                            placeholder={t('tradeList.filters.startDate')}
+                        />
+                        <span className="text-gray-500">~</span>
+                        <input
+                            type="date"
+                            value={customDateRange.end}
+                            onChange={(e) => {
+                                setCustomDateRange({ ...customDateRange, end: e.target.value });
+                                setDateFilter('custom');
+                            }}
+                            className="flex-1 md:flex-none px-2 py-2 md:py-1 border rounded text-sm"
+                            placeholder={t('tradeList.filters.endDate')}
+                        />
+                    </div>
                 </div>
+
+                {/* 내보내기 버튼 */}
+                <button
+                    onClick={() => exportToExcel(processedTrades, t)}
+                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm flex items-center gap-2"
+                    title={t('tradeList.export')}
+                >
+                    <span>📊</span>
+                    <span className="hidden md:inline">{t('tradeList.export')}</span>
+                </button>
             </div>
 
             {/* 통계 요약 */}
@@ -236,7 +251,12 @@ export const TradeList: React.FC<Props> = ({ trades, onRefresh }) => {
                     <div key={trade.id} className="bg-white border rounded-lg p-4 shadow-sm">
                         <div className="flex justify-between items-start mb-2">
                             <div>
-                                <h3 className="font-bold text-lg">{trade.symbol}</h3>
+                                <h3
+                                    className="font-bold text-lg cursor-pointer hover:text-blue-600"
+                                    onClick={() => setDetailModalTrade(trade)}
+                                >
+                                    {trade.symbol}
+                                </h3>
                                 <div className="text-sm text-gray-500">
                                     {trade.entryDate && formatRelativeTime(trade.entryDate, t)}
                                     {trade.entryDate && ` (${formatDateTime(trade.entryDate)})`}
@@ -260,9 +280,25 @@ export const TradeList: React.FC<Props> = ({ trades, onRefresh }) => {
                                 <span className="text-gray-500 mr-1">{t('tradeList.columns.reason')}:</span>
                                 {trade.reason}
                             </div>
+                            {/* 태그 미리보기 */}
+                            {trade.tags && trade.tags.length > 0 && (
+                                <div className="col-span-2 flex flex-wrap gap-1 mt-1">
+                                    {trade.tags.map((tag, idx) => (
+                                        <span key={idx} className="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">
+                                            #{tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         <div className="flex gap-2 mt-3">
+                            <button
+                                onClick={() => setDetailModalTrade(trade)}
+                                className="flex-1 py-2 border-2 border-gray-400 text-gray-600 text-sm rounded font-medium hover:bg-gray-400 hover:text-white transition-all"
+                            >
+                                {t('common.view')}
+                            </button>
                             {!trade.exitPrice && (
                                 <button
                                     onClick={() => setCloseModalTrade(trade)}
@@ -326,7 +362,19 @@ export const TradeList: React.FC<Props> = ({ trades, onRefresh }) => {
                     <tbody>
                         {processedTrades.map(trade => (
                             <tr key={trade.id} className="border-b hover:bg-gray-50">
-                                <td className="p-2">{trade.symbol}</td>
+                                <td className="p-2 font-medium cursor-pointer hover:text-blue-600" onClick={() => setDetailModalTrade(trade)}>
+                                    {trade.symbol}
+                                    {trade.tags && trade.tags.length > 0 && (
+                                        <div className="flex flex-wrap gap-1 mt-1">
+                                            {trade.tags.slice(0, 2).map((tag, idx) => (
+                                                <span key={idx} className="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded-full">
+                                                    #{tag}
+                                                </span>
+                                            ))}
+                                            {trade.tags.length > 2 && <span className="text-xs text-gray-400">+{trade.tags.length - 2}</span>}
+                                        </div>
+                                    )}
+                                </td>
                                 <td className="p-2">
                                     {trade.entryDate ? (
                                         <div className="text-sm">
@@ -355,6 +403,12 @@ export const TradeList: React.FC<Props> = ({ trades, onRefresh }) => {
                                 </td>
                                 <td className="p-2">
                                     <div className="flex gap-2">
+                                        <button
+                                            onClick={() => setDetailModalTrade(trade)}
+                                            className="px-3 py-1 border-2 border-gray-400 text-gray-600 text-sm rounded hover:bg-gray-400 hover:text-white transition-all"
+                                        >
+                                            {t('common.view')}
+                                        </button>
                                         {!trade.exitPrice && (
                                             <button
                                                 onClick={() => setCloseModalTrade(trade)}
@@ -379,10 +433,18 @@ export const TradeList: React.FC<Props> = ({ trades, onRefresh }) => {
                                 </td>
                             </tr>
                         ))}
+                        {processedTrades.length === 0 && (
+                            <tr>
+                                <td colSpan={8} className="text-center py-8 text-gray-500">
+                                    {t('tradeList.noTrades')}
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>
 
+            {/* 모달 컴포넌트들 */}
             {closeModalTrade && (
                 <CloseTradeModal
                     trade={closeModalTrade}
@@ -402,6 +464,13 @@ export const TradeList: React.FC<Props> = ({ trades, onRefresh }) => {
                         setEditModalTrade(null);
                         onRefresh();
                     }}
+                />
+            )}
+
+            {detailModalTrade && (
+                <TradeDetailModal
+                    trade={detailModalTrade}
+                    onClose={() => setDetailModalTrade(null)}
                 />
             )}
         </div>
